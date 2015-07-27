@@ -11,6 +11,9 @@ var make_move = function(row, column, x_o){
 var on_win = function(player){
     console.log(player + "'s win!");
 };
+var cats_game = function(){
+    console.log("Tie Game!");
+};
 var set_check = function(first, sec, third){
     var X = "X";
     var O = "O";
@@ -30,8 +33,9 @@ var win_check = function(board){
     set_check(board[2][0], board[2][1], board[2][2]);
     set_check(board[0][0], board[1][1], board[2][2]);
     set_check(board[0][2], board[1][1], board[2][0]);
+    cats_game();
 };
-var testBoard = [["X","O","O"],
+var testBoard = [["O","X","O"],
                  ["X","X","_"],
-                 ["X","O","_"]];
+                 ["X","O","X"]];
 win_check(testBoard);
