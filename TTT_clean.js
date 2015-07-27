@@ -1,21 +1,28 @@
 var board = [["_","_","_"],["_","_","_"],["_","_","_"]];
+
 var new_game = function(){
     board = [["_","_","_"],["_","_","_"],["_","_","_"]];
 };
+
 var print_board = function(game){
-    console.log(board[0] + "\n" + board[1] + "\n" + board[2]);
+    console.log(game[0] + "\n" + game[1] + "\n" + game[2]);
 };
+
 var tie_flag = true;
+
 var make_move = function(row, column, x_o){
   board[row][column] = x_o;
 };
+
 var on_win = function(player){
     tie_flag = false;
     console.log(player + "'s win!");
 };
+
 var cats_game = function(){
     console.log("Tie Game!");
 };
+
 var set_check = function(first, sec, third){
     var X = "X";
     var O = "O";
@@ -39,8 +46,3 @@ var win_check = function(board){
         cats_game();
     }
 };
-var test_board = [["O","X","O"],
-                 ["O","X","_"],
-                 ["X","O","X"]];
-print_board(test_board);
-win_check(test_board);
