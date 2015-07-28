@@ -51,8 +51,6 @@ var win_check = function(board){
     }
 };
 
-//experimenting with for loop.  Prefer the idea of using the win_check to determine game runtime
-//try to implement a less intensive check for win and tie it into the games run cycle.
 var the_game = function(){
   var x_o;  var row;  var col;
   new_game();
@@ -60,17 +58,27 @@ var the_game = function(){
 //need to repeat until EITHER a win or board is full
   for(var i = 1; i < 10; i++){
     x_o = window.prompt("X's or O's?", "X");
+    if(x_o != "X" && x_o != "O"){
+      console.log("Invalid Choice!");
+      x_o = window.prompt("X's or O's?", "O");
+    }
     row = window.prompt("What row?");
     col = window.prompt("What column?");
+    if(board[row][col] != "_" || 0 > row > 2 || 0 > col > 2){
+      console.log("Invalid Move!");
+      row = window.prompt("What row?");
+      col = window.prompt("What column?");
+    }
     make_move(row, col, x_o);
     print_board(board);
     if(win_check(board)){
       break;
-    } else if(i === 9){
+    }else if(i === 9){
       cats_game();
     }
   }
 };
+the_game();
 /*Thoughts on designing an AI for TicTacToe.  The AI could be made a number of ways.  
 The simplest way to design it would be to move in any empty square at random.  This would be the least likely to win.
 The next level of complexity would involve random placement Unless the human opponent was about to win.  This
@@ -78,3 +86,7 @@ would lead to more games ending in a draw than the first plan but would be beata
 that behavior.  The final, most complex and winning, strategy would involve having a specific plan in response to the
 board setup.  This AI could be designed to always go second (probably less complex than an offensive AI) and would end
 almost every game in a draw. */
+
+var ai_move = function(board){
+  
+};
