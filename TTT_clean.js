@@ -71,4 +71,10 @@ var the_game = function(){
     }
   }
 };
-the_game();
+/*Thoughts on designing an AI for TicTacToe.  The AI could be made a number of ways.  
+The simplest way to design it would be to move in any empty square at random.  This would be the least likely to win.
+The next level of complexity would involve random placement Unless the human opponent was about to win.  This
+would lead to more games ending in a draw than the first plan but would be beatable once the player observed and noted
+that behavior.  The final, most complex and winning, strategy would involve having a specific plan in response to the
+board setup.  This AI could be designed to always go second (probably less complex than an offensive AI) and would end
+almost every game in a draw. */
