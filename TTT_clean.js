@@ -1,14 +1,14 @@
 var board = [["_","_","_"],["_","_","_"],["_","_","_"]];
-
 var new_game = function(){
     board = [["_","_","_"],["_","_","_"],["_","_","_"]];
+    tie_flag = true;
 };
 
 var print_board = function(game){
     console.log(game[0] + "\n" + game[1] + "\n" + game[2]);
 };
 
-var tie_flag = true;
+var tie_flag = false;
 
 var make_move = function(row, column, x_o){
   board[row][column] = x_o;
@@ -46,3 +46,13 @@ var win_check = function(board){
         cats_game();
     }
 };
+var the_game = function(){
+  new_game();
+  print_board(board);
+  var x_o = window.prompt("Would you like to be X's or O's?", "X");
+  var row = window.prompt("What row?");
+  var col = window.prompt("What column?");
+  make_move(row, col, x_o);
+  print_board(board);
+};
+the_game();
