@@ -51,13 +51,41 @@ var win_check = function(){
     }
 };
 
+
+
+var random_empty_space = function() { //returns coordinates of random blank in board
+  var emptys = [];
+  for(var i in board_squares){
+    if(board_squares[i][0] === "_"){
+      emptys.push(board_squares[i][1]);
+    }
+    console.log(emptys);
+  }
+  return emptys[Math.floor(Math.random() * emptys.length)];
+};
+
+var board_squares = [[board[0][0], [0,0]], [board[0][1], [0,1]], [board[0][2], [0,2]], [board[1][0], [1,0]],
+        [board[1][1], [1,1]], [board[1][2], [1,2]], [board[2][0], [2,0]], [board[2][1], [2,1]], [board[2][2], [2,2]]];
+
+var ai_row = 0, ai_col = 0;
+var splitter = function(coords){
+    ai_row = coords[0];
+    ai_col = coords[1];
+    
+};
+var simple_ai_move = function(){
+  /*place an O in random_empty_space*/
+  splitter(random_empty_space());
+  make_move(ai_row, ai_col, "O");
+};
+
 var the_game = function(){
   var x_o;  var row;  var col;
   new_game();
-  print_board(board);
+  print_board();
 //repeat until either a win or full board
   for(var i = 1; i < 10; i++){
-    x_o = window.prompt("X's or O's?", "X");
+    x_o = "X";
     if(x_o != "X" && x_o != "O"){
       console.log("Invalid Choice!");
       x_o = window.prompt("X's or O's?", "O");
@@ -70,7 +98,9 @@ var the_game = function(){
       col = window.prompt("What column?");
     }
     make_move(row, col, x_o);
-    print_board(board);
+    print_board();
+    simple_ai_move();
+    print_board();
     if(win_check()){
       break;
     }else if(i === 9){
@@ -89,26 +119,3 @@ almost every game in a draw. */
 
 
 //most, if not all of this will have to be inside the_game() possibly
-var board_squares = [[board[0][0], [0,0]], [board[0][1], [0,1]], [board[0][2], [0,2]], [board[1][0], [1,0]],
-        [board[1][1], [1,1]], [board[1][2], [1,2]], [board[2][0], [2,0]], [board[2][1], [2,1]], [board[2][2], [2,2]]];
-
-var random_empty_space = function() { //returns coordinates of random blank in board
-  var emptys = [];
-  for(var i in board_squares){
-    if(board_squares[i][0] === "_"){
-      emptys.push(board_squares[i][1]);
-    }
-  }
-  return emptys[Math.floor(Math.random() * emptys.length)];
-};
-var ai_row = 0, ai_col = 0;
-var splitter = function(coords){
-    ai_row = coords[0];
-    ai_col = coords[1];
-    
-};
-var simple_ai_move = function(){
-  /*place an O in random_empty_space*/
-  splitter(random_empty_space());
-  make_move(ai_row, ai_col, "O");
-};
