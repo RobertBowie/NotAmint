@@ -55,7 +55,7 @@ var the_game = function(){
   var x_o;  var row;  var col;
   new_game();
   print_board(board);
-//need to repeat until EITHER a win or board is full
+//repeat until either a win or full board
   for(var i = 1; i < 10; i++){
     x_o = window.prompt("X's or O's?", "X");
     if(x_o != "X" && x_o != "O"){
@@ -88,5 +88,18 @@ board setup.  This AI could be designed to always go second (probably less compl
 almost every game in a draw. */
 
 var ai_move = function(board){
-  
+  /*place an O in random_empty_space*/
 };
+//most, if not all of this will have to be inside the_game() possibly
+var board_squares = [board[0][0], board[0][1], board[0][2], board[1][0],
+        board[1][1], board[1][2], board[2][0], board[2][1], board[2][2]];
+
+function random_empty_space(board) { //takes a look at board and returns the index of a random blank in board_squares
+  var emptys = [];
+  for(var i in board_squares){
+    if(board_squares[i] === "_"){
+      emptys.push(i);
+    }
+  }
+  return emptys[Math.floor(Math.random() * emptys.length)];
+}
