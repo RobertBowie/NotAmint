@@ -3,8 +3,8 @@ var new_game = function(){
     this.board = [["_","_","_"],["_","_","_"],["_","_","_"]];
 };
 
-var print_board = function(game){
-    console.log(game[0] + "\n" + game[1] + "\n" + game[2]);
+var print_board = function(){
+    console.log(board[0] + "\n" + board[1] + "\n" + board[2]);
 };
 
 
@@ -31,7 +31,7 @@ var set_check = function(first, sec, third){
     }
 };
 
-var win_check = function(board){
+var win_check = function(){
     if(set_check(board[0][0], board[0][1], board[0][2])){
         return true;
     }else if(set_check(board[1][0], board[1][1], board[1][2])){
@@ -71,7 +71,7 @@ var the_game = function(){
     }
     make_move(row, col, x_o);
     print_board(board);
-    if(win_check(board)){
+    if(win_check()){
       break;
     }else if(i === 9){
       cats_game();
@@ -87,19 +87,28 @@ that behavior.  The final, most complex and winning, strategy would involve havi
 board setup.  This AI could be designed to always go second (probably less complex than an offensive AI) and would end
 almost every game in a draw. */
 
-var ai_move = function(board){
-  /*place an O in random_empty_space*/
-};
-//most, if not all of this will have to be inside the_game() possibly
-var board_squares = [board[0][0], board[0][1], board[0][2], board[1][0],
-        board[1][1], board[1][2], board[2][0], board[2][1], board[2][2]];
 
-function random_empty_space(board) { //takes a look at board and returns the index of a random blank in board_squares
+//most, if not all of this will have to be inside the_game() possibly
+var board_squares = [[board[0][0], [0,0]], [board[0][1], [0,1]], [board[0][2], [0,2]], [board[1][0], [1,0]],
+        [board[1][1], [1,1]], [board[1][2], [1,2]], [board[2][0], [2,0]], [board[2][1], [2,1]], [board[2][2], [2,2]]];
+
+var random_empty_space = function() { //returns coordinates of random blank in board
   var emptys = [];
   for(var i in board_squares){
-    if(board_squares[i] === "_"){
-      emptys.push(i);
+    if(board_squares[i][0] === "_"){
+      emptys.push(board_squares[i][1]);
     }
   }
   return emptys[Math.floor(Math.random() * emptys.length)];
-}
+};
+var ai_row = 0, ai_col = 0;
+var splitter = function(coords){
+    ai_row = coords[0];
+    ai_col = coords[1];
+    
+};
+var simple_ai_move = function(){
+  /*place an O in random_empty_space*/
+  splitter(random_empty_space());
+  make_move(ai_row, ai_col, "O");
+};
