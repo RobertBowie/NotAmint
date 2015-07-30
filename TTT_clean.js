@@ -1,19 +1,20 @@
-var X = "X";
-var O = "O";
-var Blank = "_";
-var board_squares;
+var X = "X", O = "O", Blank = "_";
 var board, ai_row, ai_col;
 
 var Game = function() {
   this.board = this.new_game();
 };
+
 Game.prototype.new_game = function() {
   return [["_","_","_"],["_","_","_"],["_","_","_"]];
 };
+
 Game.prototype.print_board = function(){
   console.log(this.board[0] + "\n" + this.board[1] + "\n" + this.board[2]);
 };
+
 var game = new Game();
+
 Game.prototype.make_move = function(row, column, x_o){
   if(this.board[row][column] === Blank){
     this.board[row][column] = x_o;
@@ -25,35 +26,16 @@ Game.prototype.make_move = function(row, column, x_o){
 var random_index = function(){
   return Math.floor(Math.random() * 3);
 };
-game.make_move(0,0,X);
-game.make_move(0,1,X);
-game.make_move(0,2,X);
-game.make_move(1,0,X);
-game.make_move(2,2,X);
-game.make_move(1,2,X);
-game.make_move(2,0,X);
-game.make_move(2,1,X);
-game.print_board();
+
 Game.prototype.simple_ai_move = function(){
   this.ai_row = random_index();
-    console.log(this.ai_row);
   this.ai_col = random_index();
-    console.log(this.ai_col);
   if(this.make_move(this.ai_row, this.ai_col, O)){
     this.make_move(this.ai_row, this.ai_col, O);
-      console.log('move made');
+      console.log('AI move made');
   }else{
     this.simple_ai_move();
-      console.log("went to else");
   }
-  
-};
-game.simple_ai_move();
-game.print_board();
-/*
-
-var make_move = function(row, column, x_o){
-  board[row][column] = x_o;
 };
 
 var on_win = function(player){
@@ -85,7 +67,7 @@ var win_check = function(){
            set_check(board[0][2], board[1][1], board[2][0]);
 };
 
-
+//the_game is obsolete at this point-- ToDo: pull any logic/flow and functions out and delete remains
 var the_game = function(){
   var x_o;  var row;  var col;
   game.new_game();
@@ -141,11 +123,3 @@ var the_game = function(){
   }
 };
 //the_game();
-
-/*Thoughts on designing an AI for TicTacToe.  The AI could be made a number of ways.  
-The simplest way to design it would be to move in any empty square at random.  This would be the least likely to win.
-The next level of complexity would involve random placement Unless the human opponent was about to win.  This
-would lead to more games ending in a draw than the first plan but would be beatable once the player observed and noted
-that behavior.  The final, most complex and winning, strategy would involve having a specific plan in response to the
-board setup.  This AI could be designed to always go second (probably less complex than an offensive AI) and would end
-almost every game in a draw. */
