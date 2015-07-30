@@ -55,7 +55,8 @@ var set_check = function(first, sec, third){
     }
     return false;
 };
-
+// write yourself an each() function and try to use it here
+//two diff loops and two conditions that can't be done programatically 
 var win_check = function(){
     return set_check(board[0][0], board[0][1], board[0][2]) || 
            set_check(board[1][0], board[1][1], board[1][2]) ||
