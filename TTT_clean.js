@@ -1,17 +1,61 @@
-var board = [["_","_","_"],["_","_","_"],["_","_","_"]];
-var new_game = function(){
-    this.board = [["_","_","_"],["_","_","_"],["_","_","_"]];
+var X = "X";
+var O = "O";
+var Blank = "_";
+var board_squares;
+var board, ai_row, ai_col;
+
+var Game = function() {
+  this.board = this.new_game();
+};
+Game.prototype.new_game = function() {
+  return [["_","_","_"],["_","_","_"],["_","_","_"]];
+};
+Game.prototype.print_board = function(){
+  console.log(this.board[0] + "\n" + this.board[1] + "\n" + this.board[2]);
+};
+var game = new Game();
+Game.prototype.make_move = function(row, column, x_o){
+  if(this.board[row][column] === Blank){
+    this.board[row][column] = x_o;
+    return true;
+  }
+  return false;  
 };
 
-var print_board = function(){
-    console.log(board[0] + "\n" + board[1] + "\n" + board[2]);
+var random_index = function(){
+  return Math.floor(Math.random() * 3);
 };
-
+game.make_move(0,0,X);
+game.make_move(0,1,X);
+game.make_move(0,2,X);
+game.make_move(1,0,X);
+game.make_move(2,2,X);
+game.make_move(1,2,X);
+game.make_move(2,0,X);
+game.make_move(2,1,X);
+game.print_board();
+Game.prototype.simple_ai_move = function(){
+  this.ai_row = random_index();
+    console.log(this.ai_row);
+  this.ai_col = random_index();
+    console.log(this.ai_col);
+  if(this.make_move(this.ai_row, this.ai_col, O)){
+    this.make_move(this.ai_row, this.ai_col, O);
+      console.log('move made');
+  }else{
+    this.simple_ai_move();
+      console.log("went to else");
+  }
+  
+};
+game.simple_ai_move();
+game.print_board();
+/*
 
 var make_move = function(row, column, x_o){
   board[row][column] = x_o;
 };
-var win_flag = false;
+
 var on_win = function(player){
     console.log(player + "'s win!");
     return true;
@@ -22,43 +66,30 @@ var cats_game = function(){
 };
 
 var set_check = function(first, sec, third){
-    var X = "X";
-    var O = "O";
     if(first === X && sec === X && third === X){
         return on_win(X);
     } else if (first === O && sec === O && third === O){
         return on_win(O);
     }
+    return false;
 };
 
 var win_check = function(){
-    if(set_check(board[0][0], board[0][1], board[0][2])){
-        return true;
-    }else if(set_check(board[1][0], board[1][1], board[1][2])){
-        return true;
-    }else if(set_check(board[2][0], board[2][1], board[2][2])){
-        return true;
-    }else if(set_check(board[0][0], board[1][0], board[2][0])){
-        return true;
-    } else if(set_check(board[1][0], board[1][1], board[1][2])){
-        return true;
-    }else if(set_check(board[2][0], board[2][1], board[2][2])){
-        return true;
-    }else if(set_check(board[0][0], board[1][1], board[2][2])){
-        return true;
-    }else if(set_check(board[0][2], board[1][1], board[2][0])){
-        return true;
-    }
+    return set_check(board[0][0], board[0][1], board[0][2]) || 
+           set_check(board[1][0], board[1][1], board[1][2]) ||
+           set_check(board[2][0], board[2][1], board[2][2]) ||
+           set_check(board[0][0], board[1][0], board[2][0]) ||
+           set_check(board[1][0], board[1][1], board[1][2]) ||   
+           set_check(board[2][0], board[2][1], board[2][2]) ||
+           set_check(board[0][0], board[1][1], board[2][2]) ||
+           set_check(board[0][2], board[1][1], board[2][0]);
 };
-
-
-
 
 
 var the_game = function(){
   var x_o;  var row;  var col;
-  new_game();
-  print_board();
+  game.new_game();
+  game.print_board();
   var ai_row = 0, ai_col = 0;
   //took board_squares out of here
   var splitter = function(coords){
@@ -73,10 +104,9 @@ var the_game = function(){
       }
     console.log(emptys);
     }
-  return emptys[Math.floor(Math.random() * emptys.length)];
+  return emptys[Math.floor(Math.random() * 3)];
   };
   var simple_ai_move = function(){
-  /*place an O in random_empty_space*/
   splitter(random_empty_space());
   make_move(ai_row, ai_col, "O");
   };
@@ -95,11 +125,11 @@ var the_game = function(){
       col = window.prompt("What column?");
     }
     make_move(row, col, x_o);
-    var board_squares = [[board[0][0], [0,0]], [board[0][1], [0,1]],
-                       [board[0][2], [0,2]], [board[1][0], [1,0]],
-                       [board[1][1], [1,1]], [board[1][2], [1,2]],
-                       [board[2][0], [2,0]], [board[2][1], [2,1]],
-                       [board[2][2], [2,2]]];
+    board_squares = [[board[0][0], [0,0]], [board[0][1], [0,1]],
+                     [board[0][2], [0,2]], [board[1][0], [1,0]],
+                     [board[1][1], [1,1]], [board[1][2], [1,2]],
+                     [board[2][0], [2,0]], [board[2][1], [2,1]],
+                     [board[2][2], [2,2]]];
     print_board();
     simple_ai_move();
     print_board();
@@ -110,7 +140,8 @@ var the_game = function(){
     }
   }
 };
-the_game();
+//the_game();
+
 /*Thoughts on designing an AI for TicTacToe.  The AI could be made a number of ways.  
 The simplest way to design it would be to move in any empty square at random.  This would be the least likely to win.
 The next level of complexity would involve random placement Unless the human opponent was about to win.  This
