@@ -1,4 +1,3 @@
-var X = "X", O = "O", Blank = "_"; //BLANK not Blank
 
 var Controller = function(){
 //what should controller take as args and do?
@@ -12,14 +11,6 @@ Controller.prototype.on_win = function(player){
 
 Controller.prototype.cats_game = function(){
   console.log("Tie Game!");
-};
-
-var Game = function() {
-  this.board = this.new_game();
-};
-
-Game.prototype.new_game = function() {
-  return [["_","_","_"],["_","_","_"],["_","_","_"]];
 };
 
 var Computer = function(ai_lvl){
@@ -43,26 +34,41 @@ Computer.prototype.simple_ai_move = function(){
   }
 };
 
+var Game = function() {
+  this.board = this.new_game();
+};
+
+Game.prototype.new_game = function() {
+  return [[BLANK,BLANK,BLANK],[BLANK,BLANK,BLANK],[BLANK,BLANK,BLANK]];
+};
+
+
 Game.prototype.print_board = function(){
   console.log(this.board[0] + "\n" + this.board[1] + "\n" + this.board[2]);
 };
 
 
 Game.prototype.make_move = function(row, column, x_o){
-  if(this.board[row][column] === Blank){
+  this.row = row;
+  this.column = column;
+  this.x_o = x_o;
+  if(this.board[row][column] === BLANK){
     this.board[row][column] = x_o;
     return true;
   }
   return false;
 };
 
-var set_check = function(first, sec, third){
-    if(first === X && sec === X && third === X){
-        return on_win(X);
-    } else if (first === O && sec === O && third === O){
-        return on_win(O);
-    }
-    return false;
+Game.prototype.set_check = function(first, sec, third){
+  this.first = first;
+  this.sec = sec;
+  this.third = third;
+  if(first === X && sec === X && third === X){
+      return on_win(X);
+  } else if (first === O && sec === O && third === O){
+      return on_win(O);
+  }
+  return false;
 };
 var game = new Game();
 // write yourself an each() function and try to use it here
@@ -85,14 +91,14 @@ var the_game = function(){
   game.print_board();
 //repeat until either a win or full board
   for(var i = 1; i < 10; i++){
-    x_o = "X";
-    if(x_o !== "X" && x_o !== "O"){
+    x_o = X;
+    if(x_o !== X && x_o !== O){
       console.log("Invalid Choice!");
-      x_o = window.prompt("X's or O's?", "O");
+      x_o = window.prompt("X's or O's?", O);
     }
     row = window.prompt("What row?");
     col = window.prompt("What column?");
-    if(board[row][col] !== "_" || 0 > row > 2 || 0 > col > 2){
+    if(board[row][col] !== BLANK || 0 > row > 2 || 0 > col > 2){
       console.log("Invalid Move!");
       row = window.prompt("What row?");
       col = window.prompt("What column?");
