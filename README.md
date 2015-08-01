@@ -9,5 +9,7 @@
 `[0,0][0,1][0,2]`
 `[1,0][1,1][1,2]`
 `[2,0][2,1][2,2]`
+
+
 ### This is a work in progress and should gain complexity and functionality constantly
 #### Please [email](mailto:robertb1903@gmail.com) me with any questions or comments
