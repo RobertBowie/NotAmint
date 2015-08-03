@@ -1,4 +1,4 @@
-document.querySelector('div').onclick = function() {
+document.querySelector('.single_player_start').onclick = function() {
   test_game = new Game();
   test_ai = new Ai('simple');
   running = new Controller();
@@ -49,9 +49,9 @@ Controller.prototype.game_start = function(){
     this.move_prompt();
     test_game.make_move(this.row, this.column, X);
     test_game.print_board();
-    test_game.win_check();
+    // test_game.win_check();
     test_ai.simple_ai_move();
     test_game.print_board();
-    test_game.win_check();
+    // test_game.win_check();
   }
 };
