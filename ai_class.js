@@ -18,3 +18,8 @@ Ai.prototype.simple_ai_move = function(){
     this.simple_ai_move();
   }
 };
+
+Ai.prototype.get_all_sets = function(){
+  var sets = [];
+  
+};
