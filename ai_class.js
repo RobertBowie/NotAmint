@@ -12,7 +12,7 @@ Ai.prototype.random_index = function(){
 Ai.prototype.simple_ai_move = function(){
   var ai_row = this.random_index();
   var ai_col = this.random_index();
-  if(test_game.make_move(ai_row, ai_col, O)){
+  if(single_player_game.make_move(ai_row, ai_col, O)){
       console.log('AI move made');
   }else{
     this.simple_ai_move();

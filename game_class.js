@@ -26,9 +26,9 @@ Game.prototype.set_check = function(first, second, third) {
   this.second = second;
   this.third = third;
   if(first === X && second === X && third === X){
-      return running.on_win(X);
+      return this.on_win(X);
   } else if (first === O && second === O && third === O){
-      return running.on_win(O);
+      return this.on_win(O);
   }
   return false;
 };
@@ -42,4 +42,13 @@ Game.prototype.win_check = function() {
          this.set_check(this.board[0][2], this.board[1][2], this.board[2][2]) ||
          this.set_check(this.board[0][0], this.board[1][1], this.board[2][2]) ||
          this.set_check(this.board[0][2], this.board[1][1], this.board[2][0]);
+};
+
+Game.prototype.on_win = function(player){
+  console.log(player + "'s win!");
+  return true;
+};
+
+Game.prototype.cats_game = function(){
+  console.log("Tie Game!");
 };

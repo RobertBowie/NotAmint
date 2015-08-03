@@ -1,20 +1,19 @@
 document.querySelector('.single_player_start').onclick = function() {
-  test_game = new Game();
-  test_ai = new Ai('simple');
-  running = new Controller();
-  running.game_start();
+  single_player_game = new Game();
+  single_player_ai = new Ai('simple');
+  single_player_controller = new Controller();
+  single_player_controller.one_player_game_start(single_player_game, single_player_controller);
 };
 
 var Controller = function(){
 };
 
-Controller.prototype.move_prompt = function(){
+Controller.prototype.move_prompt = function(current_game, current_controller){
   this.row = window.prompt("What row?");
   this.column = window.prompt("What column?");
-  if(0 > this.row > 2 || 0 > this.column > 2 || test_game.board[this.row][this.column] !== BLANK){
+  if(0 > this.row > 2 || 0 > this.column > 2 || single_player_game.board[this.row][this.column] !== BLANK){
     console.log("Invalid Move!");
-    row = window.prompt("What row?");
-    column = window.prompt("What column?");
+    single_player_controller.move_prompt(current_game, current_controller);
   };
 };
 
@@ -43,15 +42,13 @@ Controller.prototype.cats_game = function(){
   console.log("Tie Game!");
 };
 
-Controller.prototype.game_start = function(){
-  test_game.print_board();
-  while(!test_game.win_check()){
-    this.move_prompt();
-    test_game.make_move(this.row, this.column, X);
-    test_game.print_board();
-    // test_game.win_check();
-    test_ai.simple_ai_move();
-    test_game.print_board();
-    // test_game.win_check();
+Controller.prototype.one_player_game_start = function(current_game, current_controller){
+  current_game.print_board();
+  while(!current_game.win_check()){
+    this.move_prompt(current_game, current_controller);
+    current_game.make_move(this.row, this.column, X);
+    current_game.print_board();
+    single_player_ai.simple_ai_move();
+    current_game.print_board();
   }
 };
