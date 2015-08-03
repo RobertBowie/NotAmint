@@ -21,25 +21,25 @@ Game.prototype.make_move = function(row, column, x_o) {
   return false;
 };
 
-Game.prototype.set_check = function(first, sec, third) {
+Game.prototype.set_check = function(first, second, third) {
   this.first = first;
-  this.sec = sec;
+  this.second = second;
   this.third = third;
-  if(first === X && sec === X && third === X){
-      return on_win(X);
-  } else if (first === O && sec === O && third === O){
-      return on_win(O);
+  if(first === X && second === X && third === X){
+      return running.on_win(X);
+  } else if (first === O && second === O && third === O){
+      return running.on_win(O);
   }
   return false;
 };
 
-Game.prototype.win_check = function(argument) {
-  return this.set_check(board[0][0], board[0][1], board[0][2]) ||
-         this.set_check(board[1][0], board[1][1], board[1][2]) ||
-         this.set_check(board[2][0], board[2][1], board[2][2]) ||
-         this.set_check(board[0][0], board[1][0], board[2][0]) ||
-         this.set_check(board[1][0], board[1][1], board[1][2]) ||
-         this.set_check(board[2][0], board[2][1], board[2][2]) ||
-         this.set_check(board[0][0], board[1][1], board[2][2]) ||
-         this.set_check(board[0][2], board[1][1], board[2][0]);
+Game.prototype.win_check = function() {
+  return this.set_check(this.board[0][0], this.board[0][1], this.board[0][2]) ||
+         this.set_check(this.board[1][0], this.board[1][1], this.board[1][2]) ||
+         this.set_check(this.board[2][0], this.board[2][1], this.board[2][2]) ||
+         this.set_check(this.board[0][0], this.board[1][0], this.board[2][0]) ||
+         this.set_check(this.board[1][0], this.board[1][1], this.board[1][2]) ||
+         this.set_check(this.board[2][0], this.board[2][1], this.board[2][2]) ||
+         this.set_check(this.board[0][0], this.board[1][1], this.board[2][2]) ||
+         this.set_check(this.board[0][2], this.board[1][1], this.board[2][0]);
 };
