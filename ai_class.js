@@ -19,7 +19,19 @@ Ai.prototype.simple_ai_move = function(){
   }
 };
 
-Ai.prototype.get_all_sets = function(){
-  var sets = [];
-  
+Ai.prototype.medium_ai_move = function(current_game){
+  var ai_row, ai_col;
+  var threat = current_game.threat_check();
+  if(threat){
+    ai_row = threat[0];
+    ai_col = threat[1];
+    console.log("AI countered a threat!")
+    current_game.make_move(ai_row, ai_col, O);
+  } else {
+    this.simple_ai_move();
+  }
 };
+// Ai.prototype.get_all_sets = function(){
+//   var sets = [];
+
+// };
