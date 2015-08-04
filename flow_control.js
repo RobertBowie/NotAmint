@@ -1,13 +1,13 @@
 document.querySelector('.single_player_start').onclick = function() {
   single_player_game = new Game();
-  single_player_ai = new Ai('simple');
+  single_player_ai = new Ai();
   single_player_controller = new Controller();
   single_player_controller.one_player_game_start(single_player_game, single_player_controller);
 };
 
 document.querySelector('.single_player_start_med').onclick = function() {
   single_player_game = new Game();
-  single_player_ai = new Ai('simple');
+  single_player_ai = new Ai(single_player_game);
   single_player_controller = new Controller();
   single_player_controller.one_player_medium_start(single_player_game, single_player_controller);
 };
@@ -15,11 +15,12 @@ document.querySelector('.single_player_start_med').onclick = function() {
 
 document.querySelector('.two_player_start').onclick = function() {
   two_player_game = new Game();
-  two_player_ai = new Ai('simple');
+  two_player_ai = new Ai();
   two_player_controller = new Controller();
   two_player_controller.two_player_game_start(two_player_game, two_player_controller);
 };
 
+//Should probably give Controller constructor current_game so all methods can use?
 var Controller = function(){
 };
 
@@ -46,7 +47,12 @@ Controller.prototype.move_prompt = function(current_game, current_controller){
 //       break;
 //   }
 // };
-
+Controller.prototype.max_move = function(current_game){
+  if(current_game.move_counter === 9){
+    return true;
+  }
+  return false;
+}
 
 Controller.prototype.one_player_game_start = function(current_game, current_controller){
   current_game.print_board();

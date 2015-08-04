@@ -1,8 +1,5 @@
-var Ai = function(ai_lvl){
-  this.ai_lvl = ai_lvl;
-  if(ai_lvl === "simple"){
-    //simple_ai_move() ??
-  }
+var Ai = function(current_game){ //Feed this more of the flow_control parameters and propagate throughout 
+  this.current_game = current_game;
 };
 
 Ai.prototype.random_index = function(){
@@ -12,25 +9,35 @@ Ai.prototype.random_index = function(){
 Ai.prototype.simple_ai_move = function(){
   var ai_row = this.random_index();
   var ai_col = this.random_index();
-  if(single_player_game.make_move(ai_row, ai_col, O)){
-      console.log('AI move made');
-  }else{
-    this.simple_ai_move();
+  if(!(single_player_controller.max_move(single_player_game))){
+    if(single_player_game.make_move(ai_row, ai_col, O)){
+      console.log("AI has moved randomly!");
+    }else{
+      this.simple_ai_move();
+    }
   }
 };
 
-Ai.prototype.medium_ai_move = function(current_game){
+Ai.prototype.medium_ai_move = function(){
   var ai_row, ai_col;
-  var threat = current_game.threat_check();
-  if(threat){
+  var threat = this.current_game.threat_check();
+  var offense = this.current_game.offensive_check();
+  if(offense){
+    ai_row = offense[0];
+    ai_col = offense[1];
+    this.current_game.make_move(ai_row, ai_col, O);
+    console.log("AI moved offensively!");
+  } else if(threat){
     ai_row = threat[0];
     ai_col = threat[1];
-    console.log("AI countered a threat!")
-    current_game.make_move(ai_row, ai_col, O);
+    this.current_game.make_move(ai_row, ai_col, O);
+    console.log("AI countered a threat!");
   } else {
     this.simple_ai_move();
   }
 };
+
+
 // Ai.prototype.get_all_sets = function(){
 //   var sets = [];
 

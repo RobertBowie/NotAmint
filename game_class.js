@@ -1,4 +1,5 @@
 var Game = function() {
+  this.move_counter = 0;
   this.board = this.new_game();
 };
 
@@ -16,6 +17,7 @@ Game.prototype.make_move = function(row, column, x_o) {
   this.x_o = x_o;
   if(this.board[row][column] === BLANK){
     this.board[row][column] = x_o;
+    this.move_counter++;
     return true;
   }
   return false;
@@ -74,9 +76,46 @@ Game.prototype.threat_check = function() {
   this.basic_threat_detect(diag1) || this.basic_threat_detect(diag2);
 };
 
+Game.prototype.basic_offensive_check = function(arr){
+  var first = arr[0][0];
+  var second = arr[0][1];
+  var third = arr[0][2];
+  if(first === O && second === O && third === BLANK){
+    return arr[1][2];
+  } else if(first === O && second === BLANK && third === O){
+    return arr[1][1];
+  } else if(first === BLANK && second === O && third === O){
+    return arr[1][0];
+  } else {
+    return false;
+  }
+};
+
+Game.prototype.offensive_check = function(){
+  var row1 = [[this.board[0][0], this.board[0][1], this.board[0][2]], [[0,0], [0,1], [0,2]]];
+  var row2 = [[this.board[1][0], this.board[1][1], this.board[1][2]], [[1,0], [1,1], [1,2]]];
+  var row3 = [[this.board[2][0], this.board[2][1], this.board[2][2]], [[2,0], [2,1], [2,2]]];
+  var col1 = [[this.board[0][0], this.board[1][0], this.board[2][0]], [[0,0], [1,0], [2,0]]];
+  var col2 = [[this.board[0][1], this.board[1][1], this.board[2][1]], [[0,1], [1,1], [2,1]]];
+  var col3 = [[this.board[0][2], this.board[1][2], this.board[2][2]], [[0,2], [1,2], [2,2]]];
+  var diag1 = [[this.board[0][0], this.board[1][1], this.board[2][2]], [[0,0], [1,1], [2,2]]];
+  var diag2 = [[this.board[0][2], this.board[1][1], this.board[2][0]], [[0,2], [1,1], [2,0]]];
+  return this.basic_offensive_check(row1) || this.basic_offensive_check(row2) || this.basic_offensive_check(row3)
+  || this.basic_offensive_check(col1) || this.basic_offensive_check(col2) || this.basic_offensive_check(col3) ||
+  this.basic_offensive_check(diag1) || this.basic_offensive_check(diag2);
+}
+
 Game.prototype.on_win = function(player){
   console.log(player + "'s win!");
   return true;
+};
+
+Game.prototype.cats_game_check = function(){
+  if(single_player_controller.max_move(single_player_game) && !(this.win_check())){
+    this.cats_game();
+    return true;
+  }
+  return false;
 };
 
 Game.prototype.cats_game = function(){
